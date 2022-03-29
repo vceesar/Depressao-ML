@@ -1,4 +1,4 @@
-positivas = 'palmeiras' + " -filter:retweets"
+positivas = 'feliz' + '-filter:retweets'
 
 
 negativas = ''

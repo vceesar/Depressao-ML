@@ -15,9 +15,34 @@ auth = tw.OAuthHandler(api_key,api_key_secret)
 auth.set_access_token(access_token,access_token_secret)
 api = tw.API(auth)
 
+df_tweets = pd.DataFrame()
+tweets_cursor = tw.Cursor(api.search_tweets, q=palavras.positivas).items(20)
 
-tweets = tw.Cursor(api.search_tweets, q=palavras.positivas).items(10)
+def coletar_tweets_positivos(tweets_cursor):
+    tweets = []
+    global df_tweets
+    for i in tweets_cursor:
+        tweet_id = i.id_str
+        tweet_text = i.text
+        tweet_rts = i.retweet_count
+        tweet_favs = i.favorite_count
+        tweet_date = i.created_at
+        tweet_lang = ''
+        tweet = {
+            'id': tweet_id,
+            'text': tweet_text,
+            'number_of_retweets': tweet_rts,
+            'number_of_favorites': tweet_favs,
+            'date': tweet_date,
+            'language': tweet_lang
+            # 'user_id': user_api.id_str,
+            # 'user_screen_name': user_api.screen_name
+        }
+        tweets.append(tweet)
+        df_tweets = df_tweets.append(tweets, ignore_index=True)
 
-for tweet in tweets:
-    print(tweet.created_at),
-    print(tweet.text)
+
+extracao = coletar_tweets_positivos(tweets_cursor);
+print(extracao)
+df_tweets.to_csv('tweets-positivos.csv')
+

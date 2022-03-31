@@ -3,6 +3,7 @@ import pandas as pd
 import configparser as cp
 import palavras
 
+ # configura os acessos a api utilizando a biblioteca configparser e os keys da api
 
 config = cp.ConfigParser()
 config.read('config.ini')
@@ -10,6 +11,8 @@ api_key = config['twitter_credenciais']['api_key']
 api_key_secret = config['twitter_credenciais']['api_key_secret']
 access_token = config['twitter_credenciais']['access_token']
 access_token_secret = config['twitter_credenciais']['access_token_secret']
+
+# ------------------------------------------------------------------------------------
 
 auth = tw.OAuthHandler(api_key,api_key_secret)
 auth.set_access_token(access_token,access_token_secret)
@@ -27,16 +30,16 @@ def coletar_tweets_positivos(tweets_cursor):
         tweet_rts = i.retweet_count
         tweet_favs = i.favorite_count
         tweet_date = i.created_at
-        tweet_lang = ''
+        #tweet_lang = ''
         tweet = {
             'id': tweet_id,
             'text': tweet_text,
             'number_of_retweets': tweet_rts,
             'number_of_favorites': tweet_favs,
             'date': tweet_date,
-            'language': tweet_lang
-            # 'user_id': user_api.id_str,
-            # 'user_screen_name': user_api.screen_name
+            #'language': tweet_lang,
+            'user_id': i.user.id,
+            'user_screen_name': i.user.screen_name
         }
         tweets.append(tweet)
         df_tweets = df_tweets.append(tweets, ignore_index=True)

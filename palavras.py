@@ -1,4 +1,4 @@
-positivas = 'feliz' + '-filter:retweets'
+positivas = 'happy' + '-filter:retweets'
 
 
-negativas = ''
+negativas = 'depression' + '-filter:retweets'

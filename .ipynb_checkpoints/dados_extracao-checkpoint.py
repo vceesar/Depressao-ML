@@ -14,21 +14,18 @@ api_key_secret = config['twitter_credenciais']['api_key_secret']
 access_token = config['twitter_credenciais']['access_token']
 access_token_secret = config['twitter_credenciais']['access_token_secret']
 
- # AUTENTICACAO NA API
 auth = tw.OAuthHandler(api_key,api_key_secret)
 auth.set_access_token(access_token,access_token_secret)
 api = tw.API(auth)
 
-
 df_tweets_positivos = pd.DataFrame()
 df_tweets_negativos = pd.DataFrame()
-
 tweets_cursor_positivos = tw.Cursor(api.search_tweets, q=palavras.positivas, tweet_mode="extended", lang="en").items(250)
 tweets_cursor_negativos = tw.Cursor(api.search_tweets, q=palavras.negativas, tweet_mode="extended", lang="en").items(250)
 
-public_tweets = api.home_timeline()
-for i in public_tweets:
-     print(i)
+# public_tweets = api.home_timeline()
+# for i in public_tweets:
+#     print(i._json.keys())
 
 def coletar_tweets_positivos(tweets_cursor_positivos):
     tweets_positivos = []
